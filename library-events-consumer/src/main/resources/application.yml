@@ -1,0 +1,32 @@
+spring:
+  profiles:
+    active: local
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
+      key-deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    #  value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      properties:
+        spring.json.type.mapping: User:com.learnkafka.domain.User
+        processing.guarantee: exactly_once
+        spring.json.trusted.packages: com.learnkafka.*
+   #     spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+      group-id: library-events-listener-group
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+  jpa:
+    database: h2
+    database-platform: org.hibernate.dialect.H2Dialect
+    generate-ddl: true
+  h2:
+    console:
+      enabled: true      
+server:
+  port: 8081
+#    properties:
+#      security.protocol: SSL
+#    admin:
+#      properties:
+#        bootstrap.servers: localhost:9092,localhost:9093,localhost:9094
